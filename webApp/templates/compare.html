@@ -1,0 +1,99 @@
+{%extends "layout.html" %}
+{% block title %}Compare{% endblock %}
+{% block afterlogin %}
+{% include "afterlogin.html" %}
+{% endblock %}
+{% block body %}
+<div id="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+    {% set algos = ["caesar","vigenere","playfair","rc4","rot13"] %}
+    {% for name in algos %}
+      <li class="breadcrumb-item"><a href="#{{ name }}">{{ name.capitalize() }}</a></li>
+    {% endfor %}
+      <li class="breadcrumb-item active">Overview</li>
+    </ol>
+    <!-- Area Chart Example-->
+      <form id="compareForm" action="{{ url_for('encrypt') }}" method="POST" onsubmit>
+
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fas fa-chart-area"></i>
+          Enter your Plain text here
+      </div>
+    <textarea class="card-body" type="textarea" name="plain" required>{{ value[0][0] }}</textarea>
+    <input type="hidden" id="hiddenValue" name="hiddenValue" value="{{ value[0][1] }}"/>
+    <input type="hidden" id="masterVal" name="masterVal" value="{{ value[0][1] }}"/>
+            <div class="card-footer small text-muted"><button  type="submit" onclick="document.getElementById('hiddenValue').value='-1';" class="btn {% if value[0][1]==1 %}btn-success {% else %} deafclass {% endif %}btn-block ">{% if value[0][1]==1 %}Encrypt All{% else %} Decrypt All {% endif %}</button></div>
+          </div>
+    {% for i in range(algos|length) %}
+      <div class="card mb-3">
+        <div class="card-header" id="{{ algos[i] }}">
+          <i class="fas fa-chart-area"></i>
+          {{ algos[i].upper() }} Cipher<input name="{{ algos[i] }}_key" value="{{ value[i+1][1] }}" class="input-group form-control" type="text" placeholder="write your key here">
+        </div>
+        <textarea class="card-body" type="textarea" name="{{ algos[i] }}">{{ value[i+1][0] }}</textarea>
+        <input type="hidden" name="{{ algos[i] }}_hkey" value="{{ value[i+1][2] }}"/>
+          <div class="card-footer small text-muted"><button onclick="document.getElementById('hiddenValue').value ='{{ i }}' ;" class="btn {% if value[i+1][2]==1 %}btn-success{% else %}deafclass {% endif %} btn-block">{% if value[i+1][2]==1 %}Encrypt{% else %}Decrypt{% endif %}</button></div>
+        </div>
+    {% endfor %}
+        </form>
+
+	  	<!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="{{ url_for('login')}}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © CyberCapastone 2018</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="{{ url_for('logout')}}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

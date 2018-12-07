@@ -1,0 +1,119 @@
+{%extends "layout.html" %}
+{% block title %}
+Tables
+{% endblock %}
+{% block afterlogin %}
+{% include "afterlogin.html" %}
+{% endblock %}
+{% block body %}
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{{url_for('index') }}">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Tables</li>
+          </ol>
+
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Data Table Example</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>String</th>
+                      <th>Caesar</th>
+                      <th>Vigenere</th>
+                      <th>Playfair</th>
+                      <th>rc4</th>
+                      <th>rot13</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>String</th>
+                      <th>Caesar</th>
+                      <th>Vigenere</th>
+                      <th>playfair</th>
+                      <th>rc4</th>
+                      <th>rot13</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                     {% for i in values %}
+                    <tr>
+                      <td>{{ i[0] }}</td>
+                      <td>{{ i[1] }}</td>
+                      <td>{{ i[2] }}</td>
+                      <td>{{ i[3] }}</td>
+                      <td>{{ i[4] }}</td>
+                      <td>{{ i[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Updated at {{ tim }}</div>
+
+          <p class="small text-center text-muted my-5">
+            <em>More table examples coming soon...</em>
+          </p>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © CyberCapstone 2018</span>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+{% block tables %}
+    <!-- Demo scripts for this page-->
+    <script src="/static/js/demo/datatables-demo.js"></script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{%extends "layout.html" %}
+{% block title %}Key Generate{% endblock %}
+{% block afterlogin %}
+{% include "afterlogin.html" %}
+{% endblock %}
+{% block body %}
+ <div id="content-wrapper">
+
+        <div class="container-fluid">
+        <div class="card-header">RSA Key Generator</div>
+        <div class="card-body" >
+        	<div>
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="number" id="inputEmail" name="bits" class="form-control"  placeholder="Enter No of bits(multiple of 256)" min=1024 required="required" autofocus="autofocus">
+                <label for="inputEmail">Enter No of bits(multiple of 256)</label>
+              </div>
+            
+            <button class="btn btn-primary btn-block" onclick="genereate();">Create RSA</button>
+          </div>
+          <br/><br/>
+          <div title="public key"  class="container-fluid" >
+          	<div class="row">
+              <div class="col-12" id="pbKey" style="overflow-x: auto;">
+              </div>
+          </div>
+                    <div title="pvkey" class="container-fluid" ></div>
+
+          <script language="JavaScript" type="text/javascript" src="/static/js/crypto/jsbn.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/js/crypto/random.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/js/crypto/hash.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/js/crypto/rsa.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/js/crypto/aes.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/js/crypto/api.js"></script>
+        <script>
+           function print(string)
+        {
+            document.write(string + "\n\n");
+        }
+        function genereate(){
+        
+          var PassPhrase = "The Moon is a Harsh Mistress.";
+          var Bits = document.getElementById('inputEmail').value;
+          Bits=Bits - Bits%256;
+          while(Bits<1024){
+            Bits+=256;
+          }
+        
+         // print("Matt's passphrase: " + PassPhrase);
+        //print("Bit length: " + Bits);
+        
+        var MattsRSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
+        var MattsPublicKeyString = cryptico.publicKeyString(MattsRSAkey);       
+        
+        //print("Matt's public key string:");
+        //print(MattsPublicKeyString);
+        console.log(MattsRSAkey);
+        document.getElementById('pbKey').innerHTML="public key<br/> "+MattsPublicKeyString;
+        document.getElementById('pvkey').innerHTML=MattsRSAkey;
+        return false;
+      }
+          </script>
+          <br/><br/>
+
+        	</div>
+        </div>
+{% endblock %}
